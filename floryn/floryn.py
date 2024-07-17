@@ -1,11 +1,23 @@
-import numpy as np
-import matplotlib.pyplot as plt
+# Packge floryn is for creating a plot for text with shaded based on percentage value provide in the parameter
 
+import numpy as np
 import seaborn as sns
 from skimage import io
+import matplotlib.pyplot as plt
+
 
 def pp(text, percentage=0.5, color='denim blue', ax=None):
+    """
+    Plot a text with percentage filled
+    
+    :param str text: the string to be plot
+    :param float percentage: the percentage of filled color, from 0 to 1
+    :param str color: the color of the text, based on seaborn color palette
+    :param plt.Axes ax: the matplotlib axes object to put the result into
 
+    """
+
+    # Create the base text
     fig, ax1 = plt.subplots(figsize=(13, 2));
     ax1.text(0, 0, text, fontsize=144, fontweight='bold', color=sns.xkcd_rgb['light grey']);
     ax1.axis('off');
@@ -22,6 +34,8 @@ def pp(text, percentage=0.5, color='denim blue', ax=None):
 
     output = np.copy(img)
 
+    # create the mask to be to filter the filled area
+
     light_grey = sns.xkcd_palette(['light grey'])[0]
     light_grey = [int(x*255) for x in light_grey] + [255]
     light_grey
@@ -36,6 +50,8 @@ def pp(text, percentage=0.5, color='denim blue', ax=None):
     mask2[(font_height - int(percentage*font_height)):end, ] = True
 
     mask3 = mask & mask2
+
+    # apply the new color on top of base image based on the mask
     
     mask_color = sns.light_palette(sns.xkcd_palette([color])[0], 20)[int(15*percentage)+4]
     mask_color = [int(x*255) for x in mask_color]
