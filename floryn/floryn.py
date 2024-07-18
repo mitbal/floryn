@@ -4,11 +4,10 @@ import io
 import skimage
 import numpy as np
 import seaborn as sns
-# from skimage import io
 import matplotlib.pyplot as plt
 
 
-def pp(text, percentage=0.5, color='denim blue', ax=None):
+def pp(text, percentage=0.5, color='denim blue', ax=None, orientation='vertical'):
     """
     Plot a text with percentage filled
     
@@ -45,12 +44,24 @@ def pp(text, percentage=0.5, color='denim blue', ax=None):
 
     mask = (img == light_grey).all(-1)
 
-    start = np.where(mask.any(1) == True)[0][0]
-    end = np.where(mask.any(1) == True)[0][-1]
+    if orientation == 'vertical':
+        np_index = 1
+    elif orientation == 'horizontal':
+        np_index = 0
+    else:
+        raise Exception('Orientation is not recognized. Please select either vertical or horizontal')
+
+    start = np.where(mask.any(np_index) == True)[0][0]
+    end = np.where(mask.any(np_index) == True)[0][-1]
     font_height = end - start
 
     mask2 = np.zeros((height, width), dtype=bool)
-    mask2[(font_height - int(percentage*font_height)):end, ] = True
+
+    # because image coordinate (0, 0) is at the top left
+    if orientation == 'vertical':
+        mask2[(font_height - int(percentage*font_height)):end, :] = True
+    elif orientation == 'horizontal':
+        mask2[:, start:(start+int(font_height*percentage))] = True
 
     mask3 = mask & mask2
 
