@@ -7,7 +7,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 
-def pp(text, percentage=0.5, color='denim blue', ax=None, orientation='vertical'):
+def pp(text, percentage=0.5, color='denim blue', ax=None, orientation='vertical', gradient=True):
     """
     Plot a text with percentage filled
     
@@ -66,7 +66,10 @@ def pp(text, percentage=0.5, color='denim blue', ax=None, orientation='vertical'
     mask3 = mask & mask2
 
     # apply the new color on top of base image based on the mask
-    mask_color = sns.light_palette(sns.xkcd_palette([color])[0], 20)[int(15*percentage)+4]
+    if gradient:
+        mask_color = sns.light_palette(sns.xkcd_palette([color])[0], 20)[int(15*percentage)+4]
+    else:
+        mask_color = sns.xkcd_palette([color])[0]
     mask_color = [int(x*255) for x in mask_color]
     output[mask3] = mask_color + [255]
 
