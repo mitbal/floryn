@@ -7,7 +7,13 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 
-def pp(text, percentage=0.5, color='denim blue', ax=None, orientation='vertical', gradient=True):
+def pp(text, percentage=0.5, 
+       color='denim blue',
+       font='Helvetica',
+       fontsize=144, 
+       ax=None, 
+       orientation='vertical', 
+       gradient=True):
     """
     Plot a text with percentage filled
     
@@ -20,7 +26,7 @@ def pp(text, percentage=0.5, color='denim blue', ax=None, orientation='vertical'
 
     # Create the base text
     fig, ax1 = plt.subplots(figsize=(13, 2));
-    ax1.text(0, 0, text, fontsize=144, fontweight='bold', color=sns.xkcd_rgb['light grey']);
+    ax1.text(0, 0, text, fontname=font, fontsize=fontsize, fontweight='bold', color=sns.xkcd_rgb['light grey']);
     ax1.axis('off');
 
     ax1.xaxis.set_major_locator(plt.NullLocator());
