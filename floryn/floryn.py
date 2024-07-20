@@ -79,7 +79,8 @@ def pp(text, percentage=0.5,
     mask_color = [int(x*255) for x in mask_color]
     output[mask3] = mask_color + [255]
 
-    if ax is None:
-        fig, ax = plt.subplots(figsize=(20, 10))
-    ax.imshow(output)
-    ax.axis('off');
+    if ax is not None:
+        ax.imshow(output)
+        ax.axis('off');
+
+    return output
